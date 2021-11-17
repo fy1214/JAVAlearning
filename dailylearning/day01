@@ -1,0 +1,20 @@
+局域网内主机连接另一windos主机内虚拟机的redis：
+1、设置VMware中编辑 -> 虚拟网络编辑器 -> NAT设置 -> 端口转发
+  主机端口:局域网中windos主机的ip地址
+  虚拟机ip地址：WMware中虚拟机ip(eth0)地址
+  虚拟端口号：应用的端口号，其中有：22(ssh连接默认端口号) 、6379(redis端口号) 、3306(mysql端口号)
+ 
+2、设置redis.conf
+  注释掉bind 127.0.0.1
+  protect-mode yes改成no
+
+3、打开防火墙端口
+    开端口命令：
+    打开单个端口：firewall-cmd --zone=public --add-port=80/tcp --permanent
+    打开多个端口：firewall-cmd --zone=public --add-port=20000-29999/tcp --permanent
+    --permanent  为永久生效，不加为单次有效（重启失效）
+    
+    查看开启端口：
+    netstat -ntlp 或：firewall-cmd --list-ports
+    
+4、打开windos端口
